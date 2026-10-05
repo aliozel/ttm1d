@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ttm1d"
+version = "0.1.0"
+description = "1D two-temperature model of pulsed-laser heating of layered stacks, solved with DOLFINx"
+readme = "README.md"
+requires-python = ">=3.10"
+# DOLFINx (fenics-dolfinx), PETSc (petsc4py) and mpi4py come from conda-forge, not pip: see README.
+dependencies = ["numpy", "pyyaml", "matplotlib", "sympy"]
+
+[project.scripts]
+ttm1d = "ttm1d.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

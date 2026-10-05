@@ -1,0 +1,7 @@
+# As pt_si.yaml without the substrate: a free-standing 10 nm Pt film (dashed line in Fig. 5).
+base: pt_si.yaml
+name: ntmpy_fig5_pt
+label: "NTMpy Fig. 5: free-standing 10 nm Pt"
+
+stack:
+  - {material: platinum, thickness_nm: 10}
