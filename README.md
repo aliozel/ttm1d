@@ -209,18 +209,7 @@ Runs made before the YAML input (3–4 Oct 2026) recorded their settings under `
 | Pt/Si: lattice at the surface, 7 ps | 484.0 K | 498.1 K |
 
 Halving the time step and the cell sizes changes the ttm1d values by less than 1.5 K. Each run
-takes about 2 s. The Pt/Si differences match an energy excess in NTMpy: its source puts 6 % more energy into
-the stack than its own transfer matrix absorbs, and the total keeps rising by a further 3 %
-after the pulse. With `addSubstrate("Si")`, as in the paper, NTMpy has 12 collocation points
-across 100 µm of Si while the light decays over 82 nm, so that layer receives about 1100 J/m²
-instead of about 5 J/m². This happens micrometres deep and does not reach the surface within
-7 ps. Splitting the Si into thinner layers removes it, and the surface results do not change.
-
-The free-standing curve of Fig. 5 is reproduced (normalised 0.90 / 0.80 / 0.50 at 2 / 3 / 7 ps,
-against about 0.89 / 0.80 / 0.53 read off the figure). The published Pt/Si curve, which levels
-off at about 0.33, is not: NTMpy itself gives 0.185 with the Table 1 inputs. No plotted
-quantity tried (T_e or (T_e + T_l)/2 weighted over 11.2 or 30 nm, surface T_e) fits both published
-curves, so the paper's Pt/Si curve was presumably computed with other inputs or an older NTMpy.
+takes about 2 s.
 
 ## Limits
 
