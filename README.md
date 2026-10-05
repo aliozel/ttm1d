@@ -176,6 +176,28 @@ runs, `results/ntmpy_fig5_pt/` and `results/ntmpy_fig5_pt_si/`.
 Runs made before the YAML input (3–4 Oct 2026) recorded their settings under `inputs` in
 `summary.json` instead of `input*.yaml`; `ttm1d plot` reads both.
 
+## Plot
+
+`ttm1d plot` draws figures from finished runs; it runs nothing. Give it up to 8 folders
+written by `ttm1d run`:
+
+```bash
+ttm1d plot results/ntmpy_fig5_pt_si results/ntmpy_fig5_pt             # figures into results/figures/
+ttm1d plot results/ntmpy_fig5_pt_si results/ntmpy_fig5_pt --out figs  # or into a folder of your choice
+```
+
+By default the figures go to `figures/` next to the first result folder. Each run is labelled
+with the `label` of its case file. Three PNG files are written:
+
+| File | What it shows |
+|---|---|
+| `surface_temperature.png` | Lattice temperature of the vacuum-facing surface against time, all runs on one plot, temperature on a log axis. For a pulse train, the highest value in each micropulse period, then the cooling after the train, up to twice the train length; the time the laser is on is shaded. For a single pulse, the curve itself. |
+| `depth_profiles.png` | Lattice temperature against depth (both log axes) at the times in `profile_times_us`, one panel per run, layer boundaries marked. |
+| `first_pulses.png` | Electron and lattice temperature at the front face of the first metal layer, and the vacuum-facing surface when an insulator covers it, over the first five micropulses (the whole run for a single pulse); one panel per run. |
+
+The time axis is in ps, ns or µs, whichever suits the length plotted. `depth_profiles.png`
+and `first_pulses.png` show the first four runs given.
+
 ## Files
 
 - `pyproject.toml` — package definition; the `ttm1d` command.
