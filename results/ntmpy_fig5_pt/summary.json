@@ -1,0 +1,33 @@
+{
+  "name": "ntmpy_fig5_pt",
+  "label": "NTMpy Fig. 5: free-standing 10 nm Pt",
+  "layers": [
+    {
+      "material": "platinum",
+      "thickness_nm": 10.0,
+      "n": 1.7176,
+      "k": 2.844,
+      "electrons": true,
+      "absorbed_fraction": 0.4498900440189262
+    }
+  ],
+  "reflectance": 0.17590445910005995,
+  "fluence_per_micropulse_J_m2": 60.0,
+  "micropulse_period_ns": 1.0,
+  "micropulses_per_macropulse": 1,
+  "number_of_macropulses": 1,
+  "pulse_train_end_us": 1.6000000000000001e-06,
+  "absorbed_per_macropulse_J_m2": 26.993402641107046,
+  "peak_surface_temperature_K": 990.5766080505014,
+  "peak_top_layer_temperature_K": 990.5766080505014,
+  "peak_gold_lattice_temperature_K": 990.5766080505014,
+  "peak_electron_temperature_K": 2701.4785592356657,
+  "peak_lattice_temperature_anywhere_K": 990.5766080505014,
+  "stack_mean_temperature_at_macropulse_end_K": 429.76794084766107,
+  "surface_temperature_at_end_K": 990.5766080505014,
+  "stored_minus_absorbed_fraction_at_macropulse_end": 2.234834548679714e-11,
+  "thermal_desorption_estimate": null,
+  "temperatures": 2,
+  "steps": 766,
+  "wall_time_s": 0.11933708190917969
+}

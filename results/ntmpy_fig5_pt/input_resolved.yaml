@@ -1,0 +1,75 @@
+name: ntmpy_fig5_pt
+label: 'NTMpy Fig. 5: free-standing 10 nm Pt'
+temperatures: 2
+laser:
+  wavelength_um: 0.4
+  angle_of_incidence_deg: 45
+  polarisation: p
+  micropulse_fluence_J_m2: 60
+  micropulse_fwhm_ps: 0.2
+  first_micropulse_time_ps: 1
+  micropulse_period_ns: 1
+  micropulses_per_macropulse: 1
+  number_of_macropulses: 1
+  macropulse_period_ms: 100
+  absorption_model: transfer_matrix
+materials:
+  platinum:
+    model: custom
+    refractive_index:
+      n: 1.7176
+      k: 2.844
+    electron:
+      heat_capacity_J_m3_K: 740 * T
+      thermal_conductivity_W_m_K: 72
+    lattice:
+      heat_capacity_J_m3_K: 2780000.0
+      thermal_conductivity_W_m_K: 72
+    coupling_W_m3_K: 2.5e+17
+    mesh:
+      smallest_cell_nm: 0.1
+      largest_cell_nm: 0.4
+      growth_factor: 1.2
+  silicon:
+    model: custom
+    refractive_index:
+      n: 5.5674
+      k: 0.38612
+    electron:
+      heat_capacity_J_m3_K: 150 * T
+      thermal_conductivity_W_m_K: 130
+    lattice:
+      heat_capacity_J_m3_K: 1600000.0
+      thermal_conductivity_W_m_K: where(T <= 120.7, 100*(0.09*T**3*(0.016*exp(-0.05*T)
+        + exp(-0.14*T))), 100*(13e3*T**(-1.6)))
+    coupling_W_m3_K: 1.8e+18
+    mesh:
+      smallest_cell_nm: 0.2
+      largest_cell_nm: 5000
+      growth_factor: 1.08
+stack:
+- material: platinum
+  thickness_nm: 10
+boundaries:
+  initial_temperature_K: 300
+  front: insulated
+  back: insulated
+numerics:
+  end_time_us: 7.0e-06
+  micropulse_time_step_ps: 0.005
+  time_step_growth: 1.1
+  max_time_step_us: 1.0e-08
+output:
+  results_folder: /Users/ao57/Desktop/laserAbsorptionIce/fenicsx1D/results
+  history_every_steps: 1
+  progress_every_steps: 100000
+  profile_times_us:
+  - 5.0e-07
+  - 1.0e-06
+  - 1.2e-06
+  - 2.0e-06
+  - 3.0e-06
+  - 5.0e-06
+  - 7.0e-06
+  probe_decay_lengths_nm:
+  - 11.2

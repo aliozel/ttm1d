@@ -1,0 +1,19 @@
+# simulation output (large; regenerate with `ttm1d run`): only the NTMpy benchmark is published
+results/*
+!results/ntmpy_fig5_pt/
+!results/ntmpy_fig5_pt_si/
+
+# Python
+__pycache__/
+*.egg-info/
+build/
+dist/
+
+# macOS
+.DS_Store
+
+# case files: only the NTMpy benchmark is published
+cases/*
+!cases/ntmpy_fig5/
+verification/*
+!verification/ntmpy_fig5/

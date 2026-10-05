@@ -1,0 +1,60 @@
+# Alber et al., Comput. Phys. Commun. 265, 107990 (2021) (NTMpy), Table 1 and Fig. 5:
+# 10 nm Pt on Si, a 400 nm pump pulse, two-temperature model.  A complete case file
+# (no base file) showing materials defined by numbers and formulas.
+name: ntmpy_fig5_pt_si
+label: "NTMpy Fig. 5: 10 nm Pt on Si"
+temperatures: 2
+
+laser:
+  wavelength_um: 0.4
+  angle_of_incidence_deg: 45
+  polarisation: p
+  micropulse_fluence_J_m2: 60           # 6 mJ/cm^2
+  micropulse_fwhm_ps: 0.2               # NTMpy's FWHM = 0.1 ps is a half width: the pulse is 0.2 ps wide
+  first_micropulse_time_ps: 1           # NTMpy's t0
+  micropulse_period_ns: 1               # a single pulse:
+  micropulses_per_macropulse: 1
+  number_of_macropulses: 1
+  macropulse_period_ms: 100
+  absorption_model: transfer_matrix
+
+materials:
+  platinum:                             # Table 1; heat capacities per volume (740/rho * Te per kg)
+    model: custom
+    refractive_index: {n: 1.7176, k: 2.844}        # 400 nm (Rakic et al. 1998)
+    electron: {heat_capacity_J_m3_K: "740 * T", thermal_conductivity_W_m_K: 72}
+    lattice:  {heat_capacity_J_m3_K: 2.78e6,    thermal_conductivity_W_m_K: 72}
+    coupling_W_m3_K: 2.5e17
+    mesh: {smallest_cell_nm: 0.1, largest_cell_nm: 0.4, growth_factor: 1.2}
+
+  silicon:                              # Table 1 and NTMpy's addSubstrate("Si")
+    model: custom
+    refractive_index: {n: 5.5674, k: 0.38612}      # 400 nm (Aspnes & Studna 1983)
+    electron: {heat_capacity_J_m3_K: "150 * T", thermal_conductivity_W_m_K: 130}
+    lattice:
+      heat_capacity_J_m3_K: 1.6e6
+      thermal_conductivity_W_m_K: "where(T <= 120.7, 100*(0.09*T**3*(0.016*exp(-0.05*T) + exp(-0.14*T))), 100*(13e3*T**(-1.6)))"
+    coupling_W_m3_K: 1.8e18
+    mesh: {smallest_cell_nm: 0.2, largest_cell_nm: 5000, growth_factor: 1.08}
+
+stack:                                  # vacuum side first
+  - {material: platinum, thickness_nm: 10}
+  - {material: silicon, thickness_nm: 100120}      # NTMpy's substrate: 20 nm + 100 nm + 100 um
+
+boundaries:
+  initial_temperature_K: 300
+  front: insulated                      # NTMpy's default
+  back: insulated
+
+numerics:
+  end_time_us: 7.0e-6                   # 7 ps
+  micropulse_time_step_ps: 0.005
+  time_step_growth: 1.1
+  max_time_step_us: 1.0e-8              # 10 fs
+
+output:
+  results_folder: ../../results
+  history_every_steps: 1
+  progress_every_steps: 100000
+  profile_times_us: [0.5e-6, 1.0e-6, 1.2e-6, 2.0e-6, 3.0e-6, 5.0e-6, 7.0e-6]
+  probe_decay_lengths_nm: [11.2]        # optical penetration depth of Pt at 400 nm, lambda / (4 pi k)
