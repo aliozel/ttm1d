@@ -1,0 +1,16 @@
+# Spot area from the spot heights of Slumstrup et al. (ACS Earth Space Chem. 2025, SI Table S1):
+# d = 0.97 mm at 4 um and 1.46 mm at 6 um, interpolated linearly to d = 1.137 mm at 4.68 um;
+# area = pi d^2 / (4 sin 45 deg) = 0.0143 cm2.
+base: base.yaml
+name: co47_ice_p_0.0143
+label: "CO:H2O ice on gold, 4.68 um, 38 mJ, 0.0143 cm2, p-pol"
+
+laser:
+  wavelength_um: 4.68
+  macropulse_energy_mJ: 38
+  spot_area_cm2: 0.0143
+
+stack:                              # vacuum side first
+  - {material: amorphous_ice, thickness_nm: 87.7}
+  - {material: gold_film, thickness_nm: 100}
+  - {material: copper_ofhc, thickness_nm: 3.175e6}

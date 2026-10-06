@@ -1,0 +1,127 @@
+# Settings shared by every case.  A case file starts with
+#
+#     base: base.yaml
+#
+# and then lists only what differs.  Sections are merged key by key; a list (the stack, the
+# profile times) and a refractive_index replace the base one as a whole.  Each quantity carries its unit in its
+# key name.  File paths are relative to the YAML file they are written in.
+
+temperatures: 2                       # 2: electrons and lattice in layers with electrons; 1: one temperature
+
+laser:
+  # Each case adds wavelength_um, and either macropulse_energy_mJ with spot_area_cm2
+  # or micropulse_fluence_J_m2 (incident energy per unit area in one micropulse).
+  angle_of_incidence_deg: 45          # from the surface normal
+  polarisation: p                     # p or s
+  micropulse_fwhm_ps: 4               # full width at half maximum of the intensity
+  micropulse_period_ns: 1             # 1 GHz micropulse repetition
+  micropulses_per_macropulse: 6000
+  number_of_macropulses: 1
+  macropulse_period_ms: 100           # 10 Hz; used only when number_of_macropulses > 1
+  absorption_model: transfer_matrix   # transfer_matrix, or lambert_beer (NTMpy's "LB" source:
+                                      # no reflection, the whole fluence enters the stack)
+  # first_micropulse_time_ps: 1       # centre of the first micropulse; default 3 x the FWHM
+
+materials:
+  # Each entry names a temperature-dependent law ("model", in src/materials.py) and gives
+  # its parameters.  A stack layer refers to an entry by name and may override any of its
+  # keys for that layer only.
+  #   refractive_index  complex index n + ik: either {table: <file>} with columns
+  #                     wavelength_um n k, interpolated at the laser wavelength, or {n: .., k: ..}
+  #   mesh              cell sizes inside layers of this material (numerical, not physical)
+
+  amorphous_ice:
+    model: amorphous_ice
+    density_kg_m3: 716                    # film density used by Jones et al. 2026
+    compact_density_kg_m3: 940            # pore-free amorphous ice; the solid fraction is density / this
+    thermal_conductivity_scale: 1.0       # multiplies the conductivity law (sensitivity parameter)
+    thermal_conductivity_floor_W_m_K: 0.03
+    phonon_velocity_m_s: 2500             # k = velocity * mean free path * rho * c / 3 (Klinger 1980)
+    phonon_mean_free_path_nm: 0.5
+    refractive_index: {table: ../../data/ASW_Mastrapa2009_15K.dat}   # compact amorphous ice, 15 K; pores
+                                                               # are mixed in by Maxwell Garnett
+    mesh: {smallest_cell_nm: 0.5, largest_cell_nm: 3, growth_factor: 1.2}
+    # heat capacity: fit to IAPWS R10-06 ice Ih data, fixed in src/materials.py
+
+  gold_film:
+    model: gold_film
+    density_kg_m3: 19320
+    molar_mass_g_mol: 196.967
+    electron_heat_capacity_J_m3_K2: 67.6        # gamma in C_e = gamma * T_e (Martin 1973)
+    debye_temperature_K: 165                    # lattice heat capacity, Debye model
+    resistivity_295K_ohm_m: 2.2e-8              # phonon resistivity at 295 K (Bloch-Grueneisen)
+    resistivity_debye_temperature_K: 175
+    residual_resistivity_ratio: 3               # resistivity at 295 K / at 4 K; low for thin films,
+                                                # it sets the low-temperature thermal conductivity
+    lattice_thermal_conductivity_W_m_K: 3
+    coupling_room_temperature_W_m3_K: 2.2e16    # electron-phonon coupling G at 300 K (Hohlfeld 2000)
+    coupling_low_temperature_W_m3_K5: 2.4e9     # Sigma in P = Sigma (T_e^5 - T_l^5) (Giazotto 2006)
+    fermi_velocity_m_s: 1.40e6                  # hot-electron conductivity
+    electron_electron_scattering_per_K2_per_s: 1.2e7
+    refractive_index: {table: ../../data/Au_Olmon2012_evaporated.dat}
+    mesh: {smallest_cell_nm: 0.5, largest_cell_nm: 4, growth_factor: 1.2}
+
+  copper_ofhc:
+    model: copper_ofhc
+    density_kg_m3: 8960
+    molar_mass_g_mol: 63.546
+    electron_heat_capacity_J_m3_K2: 97.995      # 0.695 mJ/(mol K^2) (Martin 1973)
+    debye_temperature_K: 343                    # only extends the NIST heat capacity above 300 K
+    residual_resistivity_ratio: 100             # 50, 100, 150, 300 or 500: picks the NIST fit
+    lattice_thermal_conductivity_W_m_K: 5
+    coupling_room_temperature_W_m3_K: 1.0e17
+    coupling_low_temperature_W_m3_K5: 2.0e9
+    fermi_velocity_m_s: 1.57e6
+    electron_electron_scattering_per_K2_per_s: 1.28e7
+    refractive_index: {table: ../../data/Cu_Ordal1985.dat}
+    mesh: {smallest_cell_nm: 1, largest_cell_nm: 2.0e4, growth_factor: 1.12}
+    # heat capacity and total thermal conductivity: NIST cryogenic fits, fixed in src/materials.py
+
+  ice_gold_contact:
+    model: thermal_contact                      # a thin layer standing in for a boundary conductance
+    conductance_coefficient_W_m2_K4: 2.0e3      # G = min(coefficient * T^3, maximum)
+    max_conductance_W_m2_K: 5.0e7
+    mesh: {smallest_cell_nm: 0.4, largest_cell_nm: 0.4, growth_factor: 1.2}
+    # heat capacity and refractive index come from the layer above; give thickness_nm: 0.4
+
+  table_s1_gold:                                # the laws of Jones et al. 2026, SI Table S1
+    model: power_law_metal
+    density_kg_m3: 19320
+    electron_heat_capacity_J_kg_K2: 0.003264    # c_e = value * T_e
+    lattice_heat_capacity_J_kg_K4: 4.758433e-5  # c_l = value * T_l^3
+    thermal_conductivity_W_m_K2: 0.0457047      # k_e = value * T_e and k_l = value * T_l
+    coupling_W_m3_K: 6.089e16                   # constant G
+    refractive_index: {n: 1.4684, k: 1.9530}    # gold at 400 nm, as in Table S1
+    mesh: {smallest_cell_nm: 0.5, largest_cell_nm: 4, growth_factor: 1.2}
+
+  table_s1_copper:
+    model: power_law_metal
+    density_kg_m3: 8960
+    electron_heat_capacity_J_kg_K2: 0.007949
+    lattice_heat_capacity_J_kg_K4: 1.2244e-5
+    thermal_conductivity_W_m_K2: 0.0734766
+    coupling_W_m3_K: 3.95e16
+    refractive_index: {n: 1.3135, k: 2.1309}    # copper at 400 nm, as in Table S1
+    mesh: {smallest_cell_nm: 1, largest_cell_nm: 2.0e4, growth_factor: 1.12}
+
+boundaries:
+  initial_temperature_K: 9.0          # also the temperature of a fixed face and of the heat sink
+  front: insulated                    # vacuum side: insulated or fixed
+  back: fixed                         # far side of the last layer: fixed, insulated or conductance
+  # back_conductance_W_m2_K: 1.0e4    # needed with back: conductance (heat sink at the initial temperature)
+
+numerics:
+  end_time_us: 100                    # simulated time; shorter than the pulse train runs only its start
+  micropulse_time_step_ps: 0.5        # uniform steps across each micropulse
+  time_step_growth: 1.4               # steps grow by this factor between micropulses
+  max_time_step_us: .inf              # cap on the step between micropulses
+
+output:
+  results_folder: ../../results       # each run writes to <results_folder>/<name>/
+  history_every_steps: 1              # save the time series every N steps (peaks use every step)
+  profile_times_us: [0.001, 0.01, 0.1, 1, 3, pulse_train_end, 10, 20, 50, 100]
+  progress_every_steps: 20000         # progress line on screen
+  # probe_decay_lengths_nm: [11.2]    # also save mean temperatures weighted by exp(-depth / length)
+  thermal_desorption:                 # first-order estimate from the surface temperature
+    binding_energies_kJ_mol: [8.1, 10.0, 14.1]   # range quoted by Jones et al. for CO on amorphous ice
+    attempt_frequency_Hz: 1.0e12
