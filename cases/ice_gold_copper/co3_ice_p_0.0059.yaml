@@ -1,0 +1,14 @@
+# Converted from the run of the same name, made before the YAML input (3-4 Oct 2026).
+base: base.yaml
+name: co3_ice_p_0.0059
+label: "CO:H2O ice on gold, 3 um, 36 mJ, 0.0059 cm2, p-pol"
+
+laser:
+  wavelength_um: 3
+  macropulse_energy_mJ: 36
+  spot_area_cm2: 0.0059
+
+stack:                              # vacuum side first
+  - {material: amorphous_ice, thickness_nm: 87.7}
+  - {material: gold_film, thickness_nm: 100}
+  - {material: copper_ofhc, thickness_nm: 3.175e6}

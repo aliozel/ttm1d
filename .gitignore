@@ -12,8 +12,9 @@ dist/
 # macOS
 .DS_Store
 
-# case files: only the NTMpy benchmark is published
+# case files: only these folders are published
 cases/*
 !cases/ntmpy_fig5/
+!cases/ice_gold_copper/
 verification/*
 !verification/ntmpy_fig5/

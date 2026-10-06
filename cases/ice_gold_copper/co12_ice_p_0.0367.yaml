@@ -1,0 +1,14 @@
+# Converted from the run of the same name, made before the YAML input (3-4 Oct 2026).
+base: base.yaml
+name: co12_ice_p_0.0367
+label: "CO:H2O ice on gold, 12 um, 127 mJ, 0.0367 cm2, p-pol"
+
+laser:
+  wavelength_um: 12
+  macropulse_energy_mJ: 127
+  spot_area_cm2: 0.0367
+
+stack:                              # vacuum side first
+  - {material: amorphous_ice, thickness_nm: 87.7}
+  - {material: gold_film, thickness_nm: 100}
+  - {material: copper_ofhc, thickness_nm: 3.175e6}

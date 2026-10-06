@@ -63,7 +63,7 @@ A case file can name a base file and list only what differs, for example:
 
 ```yaml
 base: base.yaml
-name: co3_ice_p
+name: co3_ice_p_0.0059
 label: "CO:H2O ice on gold, 3 um, 36 mJ, 0.0059 cm2, p-pol"   # used in plots
 
 laser:
@@ -171,8 +171,8 @@ Two keys that may be unfamiliar:
 - `profiles.npz`: depth `x`, layer `edges`, and `Te`, `Tl` at the times in `profile_times_us`
   (`pulse_train_end` stands for the end of the last micropulse).
 
-Of the case files only `cases/ntmpy_fig5/` is in the repository, and of the results only its two
-runs, `results/ntmpy_fig5_pt/` and `results/ntmpy_fig5_pt_si/`.
+Of the case files `cases/ice_gold_copper/` and `cases/ntmpy_fig5/` are in the repository, and of the
+results only the two Fig. 5 runs, `results/ntmpy_fig5_pt/` and `results/ntmpy_fig5_pt_si/`.
 Runs made before the YAML input (3–4 Oct 2026) recorded their settings under `inputs` in
 `summary.json` instead of `input*.yaml`; `ttm1d plot` reads both.
 
@@ -209,6 +209,8 @@ and `first_pulses.png` show the first four runs given.
 - `src/ttm1d/formulas.py` — reads property formulas and turns them into NumPy and UFL.
 - `src/ttm1d/optics.py` — transfer-matrix absorption; also NTMpy's Lambert–Beer source.
 - `src/ttm1d/plot.py` — figures from finished runs.
+- `cases/ice_gold_copper/` — CO:H₂O ice on a gold film on copper at 3, 4.68 and 12 µm, and their
+  `base.yaml` with the material library.
 - `cases/ntmpy_fig5/` — the two stacks of Alber et al. 2021, Fig. 5 (Pt on Si, free-standing Pt).
 - `verification/ntmpy_fig5/` — Fig. 5 solved with NTMpy and compared with this code (scripts,
   NTMpy output and `fig5_compare.png`).
