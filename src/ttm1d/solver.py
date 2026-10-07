@@ -246,8 +246,10 @@ class TwoTemperature1D:
         self._il, _ = sorted_dofs(1)
         geometry_node = mesh.entities_to_geometry(msh, 0, np.arange(n_vertices, dtype=np.int32)).ravel()
         vertex_x = msh.geometry.x[geometry_node, 0]  # P1 on an interval: one node per vertex
-        electrons_at = dict(zip(np.round(vertex_x / L, 13), electron_vertex))
-        self.node_has_electrons = np.array([electrons_at[v] for v in np.round(self.x / L, 13)])
+        by_depth = np.argsort(vertex_x)  # P1 on an interval: the nodes are the vertices, both sorted by depth
+        if not np.allclose(vertex_x[by_depth], self.x, rtol=0, atol=1e-9 * L):
+            raise RuntimeError("mesh vertices and solution nodes do not match")
+        self.node_has_electrons = electron_vertex[by_depth]
         self.u.x.array[:] = T0
         self.u_n.x.array[:] = T0
         self.t = 0.0
