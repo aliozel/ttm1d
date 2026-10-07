@@ -72,7 +72,7 @@ laser:
   spot_area_cm2: 0.0059
 
 stack:                            # vacuum side first
-  - {material: amorphous_ice, thickness_nm: 87.7}
+  - {material: amorphous_ice, thickness_nm: 60}
   - {material: gold_film, thickness_nm: 100}
   - {material: copper_ofhc, thickness_nm: 3.175e6}
 ```
