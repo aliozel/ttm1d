@@ -9,6 +9,8 @@ laser:
   spot_area_cm2: 0.0059
 
 stack:                              # vacuum side first
-  - {material: amorphous_ice, thickness_nm: 60.}
+  - {material: amorphous_ice, thickness_nm: 87.7,      # 87.7 +- 1.2 nm (Jones et al. 2026, main text)
+     # amorphous H2O ice at 10 K, 3333.3 cm-1 (Hudson et al. 2025), measured on the porous film itself
+     refractive_index: {n: 1.1653, k: 0.4018, includes_pores: true}}
   - {material: gold_film, thickness_nm: 100}
   - {material: copper_ofhc, thickness_nm: 3.175e6}

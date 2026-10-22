@@ -364,8 +364,12 @@ def build_layer(spec, library: Keys, where: str, wavelength_um: float, upper, up
     else:
         mat = {"amorphous_ice": M.amorphous_ice, "gold_film": M.gold_film, "copper_ofhc": M.copper,
                "power_law_metal": lambda **p: M.PowerLawMetal(material, **p)}[model](**params)
-        index = refractive_index(keys("refractive_index", dict), f"{where}.refractive_index", wavelength_um)
-        if model == "amorphous_ice" and mat.fill < 1.0:
+        spec = dict(keys("refractive_index", dict))
+        includes_pores = spec.pop("includes_pores", False)  # index measured on the porous film itself
+        if not isinstance(includes_pores, bool):
+            raise CaseError(f"{where}.refractive_index.includes_pores: expected true or false")
+        index = refractive_index(spec, f"{where}.refractive_index", wavelength_um)
+        if model == "amorphous_ice" and mat.fill < 1.0 and not includes_pores:
             index = optics.maxwell_garnett(index, mat.fill)  # the table is for compact ice
 
     mesh = Keys(keys("mesh", dict), f"{where}.mesh", ("smallest_cell_nm", "largest_cell_nm", "growth_factor"))

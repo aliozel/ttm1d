@@ -1,0 +1,7 @@
+# Reference case at 3 um. Ice conductivity k = max(k0, rho c v l / 3) with phonon mean free path
+# l = 5 nm and k0 = 0.3 W/m/K: 0.30 / 0.70 / 2.6 W/m/K at 10 / 30 / 100 K. The kinetic estimate of
+# Klinger (1980), l = 0.5 nm and k0 = 0.03 W/m/K (co3_ice_p_0.0059.yaml), gives 0.03 / 0.07 / 0.26 W/m/K.
+base: co3_ice_p_0.0059.yaml
+name: co3_ice_p_0.0059_k0.3
+label: "CO:H2O ice on gold, 3 um, 36 mJ, 0.0059 cm2, p-pol, ice conductivity 0.3 W/m/K at 10 K"
+materials: {amorphous_ice: {thermal_conductivity_floor_W_m_K: 0.3, phonon_mean_free_path_nm: 5}}

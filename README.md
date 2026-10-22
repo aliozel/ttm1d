@@ -148,7 +148,8 @@ Two keys that may be unfamiliar:
 - `refractive_index` is the complex index n + ik that sets reflection and absorption. Give
   either `{table: ../data/<file>}`, a table of wavelength (µm), n and k interpolated at the laser
   wavelength, or constants `{n: 1.47, k: 1.95}`. For amorphous ice the table is for compact ice
-  and the pores are mixed in (Maxwell Garnett) from `density_kg_m3 / compact_density_kg_m3`.
+  and the pores are mixed in (Maxwell Garnett) from `density_kg_m3 / compact_density_kg_m3`;
+  add `includes_pores: true` when the index was measured on the porous film itself.
 - `residual_resistivity_ratio` (often written RRR) is the electrical resistivity at room
   temperature divided by that at 4 K. It measures purity and grain size, and sets the thermal
   conductivity of a metal at low temperature: about 3 for a thin evaporated gold film, about
@@ -210,7 +211,10 @@ and `first_pulses.png` show the first four runs given.
 - `src/ttm1d/optics.py` — transfer-matrix absorption; also NTMpy's Lambert–Beer source.
 - `src/ttm1d/plot.py` — figures from finished runs.
 - `cases/ice_gold_copper/` — CO:H₂O ice on a gold film on copper at 3, 4.68 and 12 µm, and their
-  `base.yaml` with the material library.
+  `base.yaml` with the material library. The reference case at 3 µm is `co3_ice_p_0.0059_k0.3.yaml`:
+  ice conductivity k = max(k₀, ρc vℓ/3) with ℓ = 5 nm and k₀ = 0.3 W m⁻¹ K⁻¹ (0.30 / 0.70 / 2.6 W m⁻¹ K⁻¹
+  at 10 / 30 / 100 K); `co3_ice_p_0.0059.yaml` has the kinetic estimate of Klinger (1980), ℓ = 0.5 nm
+  and k₀ = 0.03 W m⁻¹ K⁻¹.
 - `cases/ntmpy_fig5/` — the two stacks of Alber et al. 2021, Fig. 5 (Pt on Si, free-standing Pt).
 - `verification/ntmpy_fig5/` — Fig. 5 solved with NTMpy and compared with this code (scripts,
   NTMpy output and `fig5_compare.png`).

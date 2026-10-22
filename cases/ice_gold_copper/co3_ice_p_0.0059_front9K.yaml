@@ -1,0 +1,6 @@
+base: co3_ice_p_0.0059.yaml
+name: co3_ice_p_0.0059_front9K
+label: "CO:H2O ice on gold, 3 um, 36 mJ, 0.0059 cm2, p-pol, vacuum side held at 9 K"
+
+boundaries:
+  front: fixed                      # the laser-facing (vacuum) surface held at the initial temperature, 9 K
