@@ -1,0 +1,4 @@
+layer,material,thickness_nm,n,k,absorbed_fraction
+1,amorphous H2O ice,87.7,1.1653,0.4018,0.19384
+2,Au film (RRR=3),100,1.11129,20.6629,0.0128328
+3,"Cu (OFHC, RRR=100)",3175000,1.56182,20.0545,3.21638e-06

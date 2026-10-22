@@ -1,7 +1,12 @@
-# simulation output (large; regenerate with `ttm1d run`): only the NTMpy benchmark is published
+# simulation output (large; regenerate with `ttm1d run`): only the NTMpy benchmark and the CSV tables
+# of the 3 um reference case are published
 results/*
 !results/ntmpy_fig5_pt/
 !results/ntmpy_fig5_pt_si/
+!results/co3_ice_p_0.0059_k0.3/
+results/co3_ice_p_0.0059_k0.3/*
+!results/co3_ice_p_0.0059_k0.3/*.csv
+!results/co3_ice_p_0.0059_k0.3/README.md
 
 # Python
 __pycache__/

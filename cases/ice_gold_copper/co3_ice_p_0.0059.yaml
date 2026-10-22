@@ -14,3 +14,8 @@ stack:                              # vacuum side first
      refractive_index: {n: 1.1653, k: 0.4018, includes_pores: true}}
   - {material: gold_film, thickness_nm: 100}
   - {material: copper_ofhc, thickness_nm: 3.175e6}
+
+numerics:
+  max_time_step_us: 0.05              # uncapped, the steps after the pulse train grow to 27 us
+output:
+  profile_times_us: [0.001, 0.01, 0.1, 0.5, 1, 1.5, 2, 2.5, 3, pulse_train_end, 10, 20, 50, 100]

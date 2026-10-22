@@ -1,0 +1,13 @@
+quantity,value,unit
+reflectance,0.7933239,1
+fluence_per_micropulse,10.169492,J/m2
+micropulse_period,1,ns
+micropulses_per_macropulse,6000,1
+pulse_train_end,5.999024,us
+absorbed_per_macropulse,12610.745,J/m2
+peak_surface_temperature,256.83096,K
+peak_gold_lattice_temperature,235.50034,K
+peak_gold_electron_temperature,232.81855,K
+stack_mean_temperature_at_macropulse_end,18.75622,K
+surface_temperature_at_end,59.889456,K
+stored_minus_absorbed_fraction_at_macropulse_end,-0.00044835932,1

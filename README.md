@@ -173,7 +173,8 @@ Two keys that may be unfamiliar:
   (`pulse_train_end` stands for the end of the last micropulse).
 
 Of the case files `cases/ice_gold_copper/` and `cases/ntmpy_fig5/` are in the repository, and of the
-results only the two Fig. 5 runs, `results/ntmpy_fig5_pt/` and `results/ntmpy_fig5_pt_si/`.
+results the two Fig. 5 runs, `results/ntmpy_fig5_pt/` and `results/ntmpy_fig5_pt_si/`, and CSV
+tables of the 3 µm reference case, `results/co3_ice_p_0.0059_k0.3/` (its `README.md` lists the columns).
 Runs made before the YAML input (3–4 Oct 2026) recorded their settings under `inputs` in
 `summary.json` instead of `input*.yaml`; `ttm1d plot` reads both.
 
@@ -214,7 +215,7 @@ and `first_pulses.png` show the first four runs given.
   `base.yaml` with the material library. The reference case at 3 µm is `co3_ice_p_0.0059_k0.3.yaml`:
   ice conductivity k = max(k₀, ρc vℓ/3) with ℓ = 5 nm and k₀ = 0.3 W m⁻¹ K⁻¹ (0.30 / 0.70 / 2.6 W m⁻¹ K⁻¹
   at 10 / 30 / 100 K); `co3_ice_p_0.0059.yaml` has the kinetic estimate of Klinger (1980), ℓ = 0.5 nm
-  and k₀ = 0.03 W m⁻¹ K⁻¹.
+  and k₀ = 0.03 W m⁻¹ K⁻¹. The 3 µm cases cap the time step at 0.05 µs.
 - `cases/ntmpy_fig5/` — the two stacks of Alber et al. 2021, Fig. 5 (Pt on Si, free-standing Pt).
 - `verification/ntmpy_fig5/` — Fig. 5 solved with NTMpy and compared with this code (scripts,
   NTMpy output and `fig5_compare.png`).
